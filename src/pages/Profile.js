@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 const Profile = () => {
     const [firstName, setFirstName] = useState("First Name");
     const [lastName, setLastName] = useState("Last Name");
-    const [year, setYear] = useState("Year");
+    const [year, setYear] = useState(1000);
     const [bio, setBio] = useState("Bio");
     const [major, setMajor] = useState("Major");
     return (

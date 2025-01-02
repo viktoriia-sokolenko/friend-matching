@@ -1,13 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Layout from "./pages/Layout";
+import Profile from "./pages/Profile";
+import Profiles from "./pages/Profiles";
+import NoPage from "./pages/NoPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<App />} />
+          <Route path="profiles" element={<Profiles />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

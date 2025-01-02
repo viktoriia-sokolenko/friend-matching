@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import PlaceholderImage from './assets/placeholder.jpg'
+import PlaceholderImage from '../assets/placeholder.jpg'
 
 const ProfileCard = ({firstName, lastName, year, bio, major}) => {
     return (
