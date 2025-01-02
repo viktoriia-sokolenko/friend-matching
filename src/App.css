@@ -12,7 +12,12 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+h1 {
+  color: #1F271B;
+}
+h2 {
+  color: #540D6E;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,11 +28,83 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
+.Home {
+  margin-top: 10%;
+}
+.menu {
+  width: 100%;
+  height: 10%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #540D6E;
+  color: white;
+  display: flex;     
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;   
+}
+.nav-sections {
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  ul {
+    width: 100%;
+  }
+  li {
+    list-style-type: none;
+    width: 30%;
+  }
+}
 
+.Profile {
+  padding: 40px;
+  text-align: left;
+}
+.ProfileCard {
+  width: 100%;
+  padding: 10px;
+  box-shadow: 0 3px 10px #FFD23F;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 20px;
+  align-content: space-around;
+  justify-content: flex-start;
+  img {
+    width: 20%;
+    margin: 5px;
+  }
+}
+.ProfileText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  margin: 15px;
+  h2 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+}
+.Grid {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between; 
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
