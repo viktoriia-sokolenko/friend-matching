@@ -71,6 +71,7 @@ h2 {
 }
 .ProfileCard {
   width: 100%;
+  height: 30%;
   padding: 10px;
   box-shadow: 0 3px 10px #FFD23F;
   display: flex;
@@ -93,9 +94,14 @@ h2 {
   align-items: flex-start;
   flex-wrap: nowrap;
   margin: 15px;
-  h2 {
+  h1, h2 {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+  }
+  span {
+    font-size: 0.8em;
+    color: #540D6E;
+    margin-left: 10px;
   }
 }
 .Grid {

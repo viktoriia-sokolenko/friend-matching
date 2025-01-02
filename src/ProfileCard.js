@@ -10,9 +10,8 @@ const ProfileCard = ({firstName, lastName, year, bio, major}) => {
                     alt={`Placeholder Image`}
             />
             <div className='ProfileText'>
-                <h1>{firstName} {lastName}</h1>
+                <h1>{firstName} {lastName} <span>Class of {year}</span></h1>
                 <h2>{major}</h2>
-                <h2>Class of {year}</h2>
                 <p>{bio}</p>
             </div>
         </div>
