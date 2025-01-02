@@ -22,6 +22,13 @@ h1 {
 h2 {
   color: #540D6E;
 }
+button {
+  background-color: #BAA5FF;
+  border: none;
+  cursor: pointer;
+  color: #1F271B;
+  padding: 10px;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -64,16 +71,24 @@ h2 {
     font-size: 1.3em;
   }
 }
-
+.icons {
+  width: 20%;
+}
 .Profile {
   padding: 40px;
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-start;
 }
 .ProfileCard {
   width: 100%;
   height: 30%;
   padding: 10px;
-  box-shadow: 0 3px 10px #FFD23F;
+  box-shadow: 0 0px 10px #0E6BA8;
   display: flex;
   flex-direction: row;
   justify-content: center;

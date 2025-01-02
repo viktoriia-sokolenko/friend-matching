@@ -3,27 +3,22 @@ import ProfileCard from '../components/ProfileCard';
 
 
 const Profiles = () => {
+    const [allProfiles, setAllProfiles] = useState([]);
     const [filteredProfiles, setFilteredProfiles] = useState([]);
     useEffect(() => {
-        setFilteredProfiles([
-            {
-                id: 1,
-                firstname: 'John',
-                lastname: 'Doe',
-                graduationyear: 2027,
-                major: 'Human Development',
-                bio: 'Thinking about Roman Empire.'
-            },
-            {
-                id: 2,
-                firstname: 'Jane',
-                lastname: 'Smith',
-                graduationyear: 2025,
-                major: 'Data Science',
-                bio: 'Love books, films, music.'
-            }
-        ]);
-    }, []);
+        const getAllProfiles = async () => {
+          try {
+            const response = await fetch("https://disc-assignment-5-users-api.onrender.com/api/users");
+            const data = await response.json();
+            console.log(data);
+            setAllProfiles(data);
+            setFilteredProfiles(data);
+          } catch (error) {
+            console.error("Error fetching profiles:", error);
+          }
+        };
+        getAllProfiles();
+      }, []);
     return (
         <div className="Grid">
             {filteredProfiles.map((student) => (
@@ -35,6 +30,7 @@ const Profiles = () => {
                         year={student.graduationyear}
                         major={student.major}
                         bio = {student.bio}
+                        image = {student.profilepicture}
                     />
                 ))
             }

@@ -8,6 +8,7 @@ import Layout from "./pages/Layout";
 import Profile from "./pages/Profile";
 import Profiles from "./pages/Profiles";
 import NoPage from "./pages/NoPage";
+import ViewProfile from "./pages/ViewProfile";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
           <Route index element={<App />} />
           <Route path="profiles" element={<Profiles />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="profiles/:id" element={<ViewProfile />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
