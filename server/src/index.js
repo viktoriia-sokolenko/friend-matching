@@ -17,6 +17,13 @@ pool.connect()
   .then(() => console.log('Connected to PostgreSQL'))
   .catch((err) => console.error('Connection error:', err));
 
+const cors = require('cors');
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true 
+}));
+
 app.get('/users', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM users');

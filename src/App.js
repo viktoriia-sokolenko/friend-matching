@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import NorthwesternImage from './assets/northwestern.jpg'
 
@@ -15,7 +14,7 @@ function App() {
       <img 
         className = "icons"
         src={NorthwesternImage}
-        alt={`A photo shows Northwestern campus.`}
+        alt={`Shows Northwestern campus.`}
       />
     </div>
   );

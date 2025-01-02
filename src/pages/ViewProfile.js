@@ -10,7 +10,12 @@ const ViewProfile = () => {
     useEffect(() => {
         const getProfile = async () => {
           try {
-            const response = await fetch(`https://disc-assignment-5-users-api.onrender.com/api/users/${id}`);
+            const response = await fetch(`/users/${id}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const text = await response.text();
+            console.log("Response Text:", text);
             const data = await response.json();
             console.log(data);
             setStudent(data);

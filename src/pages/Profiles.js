@@ -8,7 +8,10 @@ const Profiles = () => {
     useEffect(() => {
         const getAllProfiles = async () => {
           try {
-            const response = await fetch("https://disc-assignment-5-users-api.onrender.com/api/users");
+            const response = await fetch("/users");
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
             console.log(data);
             setAllProfiles(data);
