@@ -28,8 +28,8 @@ const Profiles = () => {
                    <ProfileCard 
                         key={student.id} 
                         id={student.id} 
-                        firstName={student.firstname}
-                        lastName={student.lastname} 
+                        firstName={student.first_name}
+                        lastName={student.last_name} 
                         year={student.graduationyear}
                         major={student.major}
                         bio = {student.bio}

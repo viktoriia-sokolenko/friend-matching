@@ -11,11 +11,6 @@ const ViewProfile = () => {
         const getProfile = async () => {
           try {
             const response = await fetch(`/users/${id}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const text = await response.text();
-            console.log("Response Text:", text);
             const data = await response.json();
             console.log(data);
             setStudent(data);
@@ -30,10 +25,10 @@ const ViewProfile = () => {
             <img 
                     className = "icons"
                     src={student.image? student.image : PlaceholderImage}
-                    alt={`${student.firstName} ${student.lastName}'s profile picture`}
+                    alt={`${student.first_name} ${student.last_name}'s profile picture`}
             />
             <div className = "ProfileText">
-                <h1>{student.firstname} {student.lastname}</h1>
+                <h1>{student.first_name} {student.last_name}</h1>
                 <h2>{student.major}</h2>
                 <h2>Class of {student.year}</h2>
                 <p>{student.bio}</p>
