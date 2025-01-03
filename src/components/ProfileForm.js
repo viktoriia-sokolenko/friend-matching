@@ -8,8 +8,9 @@ const ProfileForm = ({ user, new: isNew }) => {
         user_id: userId,
         bio: user.bio || "",
         major: user.major || "",
-        year: user.year || "",
+        year: user.year || null,
         dateOfBirth: user.date_of_birth || "2025-01-01",
+        contactInfo: user.contact_info || "",
     });
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -19,8 +20,9 @@ const ProfileForm = ({ user, new: isNew }) => {
             user_id: userId,
             bio: user.bio || "",
             major: user.major || "",
-            year: user.year || "",
+            year: user.year || null,
             dateOfBirth: user.date_of_birth || "2025-01-01",
+            contactInfo: user.contact_info || "",
         });
     }, [user]);
 
@@ -115,6 +117,15 @@ const ProfileForm = ({ user, new: isNew }) => {
                         id="bio"
                         name="bio"
                         value={profile.bio}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className="formRow">
+                    <label htmlFor="contactInfo">Contact Info:</label>
+                    <textarea
+                        id="contactInfo"
+                        name="contactInfo"
+                        value={profile.contactInfo}
                         onChange={handleInputChange}
                     />
                 </div>

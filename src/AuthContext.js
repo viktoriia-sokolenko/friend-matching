@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("user_id");
         setToken("");
         localStorage.removeItem("access_token");
+        window.location = `/`;
     };
     useEffect(() => {
         const hashParams = new URLSearchParams(window.location.hash.substring(1));

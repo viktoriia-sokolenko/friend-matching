@@ -58,9 +58,10 @@ const Profile = () => {
                 : 
                 (
                 <>
-                <h2>{student.user_profiles?.major || 'N/A'}</h2>
-                <h2>Class of {student.user_profiles?.year || 'N/A'}</h2>
-                <p>{student.user_profiles?.bio || 'No bio available'}</p>
+                <h2>{student.user_profiles?.major || 'Unknown major'}</h2>
+                {student.user_profiles?.year && (<h2>Class of {student.user_profiles.year}</h2>)}
+                {student.user_profiles?.bio && (<p>{student.user_profiles.bio}</p>)}
+                {student.user_profiles?.contact_info && (<p>{student.user_profiles.contact_info}</p>)}
                 <button onClick = {editProfile}>Edit</button>
                 </>
                 )

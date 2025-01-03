@@ -142,7 +142,7 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
 });
 
 app.post('/users/profiles', checkAuth, async (req, res) => {
-    const { user_id, bio, major, year, dateOfBirth } = req.body;
+    const { user_id, bio, major, year, dateOfBirth, contactInfo } = req.body;
     try {
         const { data, error } = await supabase
             .from('user_profiles')
@@ -152,7 +152,8 @@ app.post('/users/profiles', checkAuth, async (req, res) => {
                     bio,
                     major,
                     year,
-                    date_of_birth: dateOfBirth
+                    date_of_birth: dateOfBirth,
+                    contact_info: contactInfo
                 }
             ])
             .single();
@@ -194,7 +195,7 @@ app.patch('/users/:id', checkAuth, async (req, res) => {
 });
 app.patch('/profiles/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
-    const { bio, major, year, dateOfBirth } = req.body;
+    const { bio, major, year, dateOfBirth, contactInfo } = req.body;
     try {
         const { data, error } = await supabase
             .from('user_profiles')
@@ -202,7 +203,8 @@ app.patch('/profiles/:id', checkAuth, async (req, res) => {
                 bio,
                 major,
                 year,
-                date_of_birth: dateOfBirth
+                date_of_birth: dateOfBirth,
+                contact_info: contactInfo
             })
             .eq('user_id', id)
             .single();
