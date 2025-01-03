@@ -8,6 +8,8 @@ import Layout from "./pages/Layout";
 import Profile from "./pages/Profile";
 import Profiles from "./pages/Profiles";
 import NoPage from "./pages/NoPage";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import ViewProfile from "./pages/ViewProfile";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,6 +19,8 @@ root.render(
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<App />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
           <Route path="profiles" element={<Profiles />} />
           <Route path="profile" element={<Profile />} />
           <Route path="profiles/:id" element={<ViewProfile />} />

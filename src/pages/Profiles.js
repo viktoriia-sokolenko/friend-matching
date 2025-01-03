@@ -7,13 +7,18 @@ const Profiles = () => {
     const [filteredProfiles, setFilteredProfiles] = useState([]);
     useEffect(() => {
         const getAllProfiles = async () => {
-          try {
-            const response = await fetch('/users/profiles');
+            const token = localStorage.getItem('access_token');
+            try {
+            const response = await fetch('/users/profiles', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            console.log(data);
             const data_with_profiles = data.filter(student => student.user_profiles !== null);
             setAllProfiles(data_with_profiles);
             setFilteredProfiles(data_with_profiles);

@@ -86,13 +86,8 @@ const checkAuth = async (req, res, next) => {
         return res.status(401).json({ error: "No token provided" });
     }
     try {
-        const {
-        data: { user },
-        error,
-        } = await supabase.auth.getUser(token);
-        if (error.message.includes("JWT expired")) {
-            return res.status(401).json({ error: "Session expired. Please log in again." });}
-        if (error) throw error;
+        const { data: user, error } = await supabase.auth.getUser(token);
+        if (error) throw error
         req.user = user;
         next();
     } catch (error) {
