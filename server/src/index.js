@@ -54,10 +54,10 @@ app.get('/allusers/:id', async (req, res) => {
     });
 app.post("/api/login", async (req, res) => {
     const { email, password } = req.body;
-    try {
+        try {
         const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+            email,
+            password,
         });
         if (error) throw error;
         if (!data.session) throw new Error("Invalid credentials");
@@ -67,7 +67,7 @@ app.post("/api/login", async (req, res) => {
     }
     });
 app.post("/api/register", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, first_name, last_name } = req.body;
     try {
         const { data, error } = await supabase.auth.signUp({
         email,
@@ -75,6 +75,19 @@ app.post("/api/register", async (req, res) => {
         });
         if (!data.user) throw new Error("Registration failed");
         if (error) throw error;
+        const { error: insertError } = await supabase
+            .from('users')
+            .insert([
+                {
+                    id: data.user.id,
+                    email: data.user.email,
+                    first_name,
+                    last_name,
+                }
+            ]);
+        if (insertError) {
+            throw insertError;
+        }
         res.status(201).json({ message: "Registration successful! Please log in", user: data.user });
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -29,9 +29,9 @@ const SignIn = () => {
     };
 
     return (
-        <div>
+        <div className = "Page">
             <h2>Login</h2>
-            <form onSubmit={handleSignIn}>
+            <form className = "Form">
                 <input
                     type="email"
                     placeholder="Email"
@@ -44,9 +44,9 @@ const SignIn = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit">Sign In</button>
+                <button type="submit" onClick={handleSignIn}>Sign In</button>
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error">{error}</p>}
         </div>
     );
 };

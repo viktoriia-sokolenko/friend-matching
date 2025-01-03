@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 
-const SignUp = ({ setAuthToken }) => {
+const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [first_name, setFirstName] = useState("");
+    const [last_name, setLastName] = useState("");
     const [error, setError] = useState("");
 
     const handleSignUp = async (e) => {
@@ -13,7 +15,7 @@ const SignUp = ({ setAuthToken }) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password, first_name, last_name }),
             });
 
             const data = await response.json();
@@ -25,9 +27,9 @@ const SignUp = ({ setAuthToken }) => {
     };
 
     return (
-        <div>
+        <div className = "Page">
             <h2>Sign Up</h2>
-            <form onSubmit={handleSignUp}>
+            <form className = "Form">
                 <input
                     type="email"
                     placeholder="Email"
@@ -35,12 +37,24 @@ const SignUp = ({ setAuthToken }) => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
+                    type="text"
+                    placeholder="First Name"
+                    value={first_name}
+                    onChange={(e) => setFirstName(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Last Name"
+                    value={last_name}
+                    onChange={(e) => setLastName(e.target.value)}
+                />
+                <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit">Sign Up</button>
+                <button type="submit" onClick={handleSignUp}>Sign Up</button>
             </form>
             {error && <p className="error">{error}</p>}
         </div>

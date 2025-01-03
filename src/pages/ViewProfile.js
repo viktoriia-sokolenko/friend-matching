@@ -29,9 +29,9 @@ const ViewProfile = () => {
             />
             <div className = "ProfileText">
                 <h1>{student.first_name} {student.last_name}</h1>
-                <h2>{student.major}</h2>
-                <h2>Class of {student.year}</h2>
-                <p>{student.bio}</p>
+                <h2>{student.user_profiles.major}</h2>
+                <h2>Class of {student.user_profiles.year}</h2>
+                <p>{student.user_profiles.bio}</p>
             </div>
         </div>
     )
