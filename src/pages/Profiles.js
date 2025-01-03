@@ -51,11 +51,10 @@ const Profiles = () => {
                   if (searchInput === "") return true;
                   const lowerSearchInput = searchInput.toLowerCase();
                   const bioMatches = (profile.user_profiles.bio?.toLowerCase().includes(lowerSearchInput));
-                  const contactMatches = (profile.user_profiles.contact_info?.toLowerCase().includes(lowerSearchInput));
                   const majorMatches = (profile.user_profiles.major?.toLowerCase().includes(lowerSearchInput));
                   const firstNameMatches = (profile.first_name.toLowerCase().includes(lowerSearchInput));
                   const lastNameMatches = (profile.last_name.toLowerCase().includes(lowerSearchInput));
-                  return (bioMatches || contactMatches || majorMatches || firstNameMatches || lastNameMatches);
+                  return (bioMatches || majorMatches || firstNameMatches || lastNameMatches);
                 });
                 setFilteredProfiles(filteredData);
               }
@@ -64,43 +63,43 @@ const Profiles = () => {
       }, [searchInput, allProfiles, selectedYears]);
     return (
         <div className='Page'>
-        <div className = "Form">
-            <input
-                type="text"
-                placeholder="Search by keywords"
-                className='input-name'
-                onChange={(e) => setSearchInput(e.target.value)}
-            />
-            <p>Graduation Year:</p>
-            <div className = "checkboxes">
-                {allYears.map((year) => (
-                    <label key={year}>
-                        <input
-                            type="checkbox"
-                            value = {year}
-                            checked={selectedYears.includes(year)}
-                            onChange={handleYearChange}
+            <div className = "Form">
+                <input
+                    type="text"
+                    placeholder="Search by keywords"
+                    className='input-name'
+                    onChange={(e) => setSearchInput(e.target.value)}
+                />
+                <p>Graduation Year:</p>
+                <div>
+                    {allYears.map((year) => (
+                        <label key={year}>
+                            <input
+                                type="checkbox"
+                                value = {year}
+                                checked={selectedYears.includes(year)}
+                                onChange={handleYearChange}
+                            />
+                            {year}
+                        </label>
+                    ))}
+                </div>
+            </div> 
+            <div className="Grid">
+                {filteredProfiles.map((student) => (
+                    <ProfileCard 
+                            key={student.id} 
+                            id={student.id} 
+                            firstName={student.first_name}
+                            lastName={student.last_name} 
+                            year={student.user_profiles.year}
+                            major={student.user_profiles.major}
+                            bio = {student.user_profiles.bio}
+                            image = {student.profilepicture}
                         />
-                        {year}
-                    </label>
-                ))}
+                    ))
+                }
             </div>
-        </div> 
-        <div className="Grid">
-            {filteredProfiles.map((student) => (
-                   <ProfileCard 
-                        key={student.id} 
-                        id={student.id} 
-                        firstName={student.first_name}
-                        lastName={student.last_name} 
-                        year={student.user_profiles.year}
-                        major={student.user_profiles.major}
-                        bio = {student.user_profiles.bio}
-                        image = {student.profilepicture}
-                    />
-                ))
-            }
-        </div>
         </div>
     )
 
