@@ -190,6 +190,12 @@ button:hover{
   justify-content: flex-start;
   flex-wrap: wrap;
 }
+.checkboxes {
+  /* input{
+    width: 50px;
+    content: '\2713';
+  } */
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

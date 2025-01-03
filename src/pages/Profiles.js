@@ -5,6 +5,19 @@ import ProfileCard from '../components/ProfileCard';
 const Profiles = () => {
     const [allProfiles, setAllProfiles] = useState([]);
     const [filteredProfiles, setFilteredProfiles] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
+    const [selectedYears, setSelectedYears] = useState([]);
+    const [allYears, setAllYears] = useState([]);
+    const handleYearChange = (e) => {
+        const year = e.target.value;
+        setSelectedYears((prevYears) => {
+            if (prevYears.includes(year)) {
+                return prevYears.filter((selectedYear) => selectedYear !== year);
+            } else {
+                return [...prevYears, year];
+            }
+        });
+    };
     useEffect(() => {
         const getAllProfiles = async () => {
             const token = localStorage.getItem('access_token');
@@ -22,13 +35,57 @@ const Profiles = () => {
             const data_with_profiles = data.filter(student => student.user_profiles !== null);
             setAllProfiles(data_with_profiles);
             setFilteredProfiles(data_with_profiles);
+            setAllYears(Array.from(new Set(data_with_profiles.map((profile) => profile.user_profiles.year.toString()))));
           } catch (error) {
             console.error("Error fetching profiles:", error);
           }
         };
         getAllProfiles();
       }, []);
+      useEffect(() => {
+        const filterProfiles = () => {
+            if (allProfiles) {
+                const filteredData = allProfiles.filter((profile) => {
+                  const matchesYear= (selectedYears.length === 0 || selectedYears.includes(profile.user_profiles.year.toString()));
+                  if (!matchesYear) return false;
+                  if (searchInput === "") return true;
+                  const lowerSearchInput = searchInput.toLowerCase();
+                  const bioMatches = (profile.user_profiles.bio?.toLowerCase().includes(lowerSearchInput));
+                  const contactMatches = (profile.user_profiles.contact_info?.toLowerCase().includes(lowerSearchInput));
+                  const majorMatches = (profile.user_profiles.major?.toLowerCase().includes(lowerSearchInput));
+                  const firstNameMatches = (profile.first_name.toLowerCase().includes(lowerSearchInput));
+                  const lastNameMatches = (profile.last_name.toLowerCase().includes(lowerSearchInput));
+                  return (bioMatches || contactMatches || majorMatches || firstNameMatches || lastNameMatches);
+                });
+                setFilteredProfiles(filteredData);
+              }
+        };
+        filterProfiles();
+      }, [searchInput, allProfiles, selectedYears]);
     return (
+        <div className='Page'>
+        <div className = "Form">
+            <input
+                type="text"
+                placeholder="Search by keywords"
+                className='input-name'
+                onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <p>Graduation Year:</p>
+            <div className = "checkboxes">
+                {allYears.map((year) => (
+                    <label key={year}>
+                        <input
+                            type="checkbox"
+                            value = {year}
+                            checked={selectedYears.includes(year)}
+                            onChange={handleYearChange}
+                        />
+                        {year}
+                    </label>
+                ))}
+            </div>
+        </div> 
         <div className="Grid">
             {filteredProfiles.map((student) => (
                    <ProfileCard 
@@ -43,6 +100,7 @@ const Profiles = () => {
                     />
                 ))
             }
+        </div>
         </div>
     )
 
