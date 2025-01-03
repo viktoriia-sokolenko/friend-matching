@@ -10,7 +10,7 @@ const ViewProfile = () => {
     useEffect(() => {
         const getProfile = async () => {
           try {
-            const response = await fetch(`/users/${id}`);
+            const response = await fetch(`/allusers/${id}`);
             const data = await response.json();
             console.log(data);
             setStudent(data);

@@ -8,14 +8,15 @@ const Profiles = () => {
     useEffect(() => {
         const getAllProfiles = async () => {
           try {
-            const response = await fetch("/users");
+            const response = await fetch('/users/profiles');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
             console.log(data);
-            setAllProfiles(data);
-            setFilteredProfiles(data);
+            const data_with_profiles = data.filter(student => student.user_profiles !== null);
+            setAllProfiles(data_with_profiles);
+            setFilteredProfiles(data_with_profiles);
           } catch (error) {
             console.error("Error fetching profiles:", error);
           }
@@ -30,9 +31,9 @@ const Profiles = () => {
                         id={student.id} 
                         firstName={student.first_name}
                         lastName={student.last_name} 
-                        year={student.graduationyear}
-                        major={student.major}
-                        bio = {student.bio}
+                        year={student.user_profiles.year}
+                        major={student.user_profiles.major}
+                        bio = {student.user_profiles.bio}
                         image = {student.profilepicture}
                     />
                 ))
