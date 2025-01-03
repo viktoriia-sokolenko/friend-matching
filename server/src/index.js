@@ -7,24 +7,14 @@ const port = 3001;
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-// const pool = new Pool({
-//   host: process.env.DB_HOST,
-//   port: process.env.DB_PORT,
-//   database: process.env.DB_NAME,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASSWORD,
-// });
-
-// pool.connect()
-//   .then(() => console.log('Connected to PostgreSQL'))
-//   .catch((err) => console.error('Connection error:', err));
-
 const cors = require('cors');
 app.use(cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
     credentials: true 
 }));
+
+app.use(express.json());
 
 app.get('/users', async (req, res) => {
     try {
@@ -36,7 +26,6 @@ app.get('/users', async (req, res) => {
         }
         res.json(data);
     } catch (error) {
-        console.error('Error fetching users:', error);
         res.status(500).send('Server Error');
     }
 });
@@ -60,11 +49,57 @@ app.get('/allusers/:id', async (req, res) => {
 
         res.json(data);
     } catch (error) {
-        console.error('Error fetching user:', error);
         res.status(500).send('Server Error');
     }
     });
-app.get('/users/profiles', async (req, res) => {
+app.post("/api/login", async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+        });
+        if (error) throw error;
+        if (!data.session) throw new Error("Invalid credentials");
+        res.status(200).json({ token: data.session.access_token });
+    } catch (error) {
+        res.status(401).json({ error: error.message });
+    }
+    });
+app.post("/api/register", async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        });
+        if (!data.user) throw new Error("Registration failed");
+        if (error) throw error;
+        res.status(201).json({ message: "Registration successful! Please log in", user: data.user });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+    });
+const checkAuth = async (req, res, next) => {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+        return res.status(401).json({ error: "No token provided" });
+    }
+    try {
+        const {
+        data: { user },
+        error,
+        } = await supabase.auth.getUser(token);
+        if (error.message.includes("JWT expired")) {
+            return res.status(401).json({ error: "Session expired. Please log in again." });}
+        if (error) throw error;
+        req.user = user;
+        next();
+    } catch (error) {
+        res.status(401).json({ error: "Invalid token" });
+    }
+    };
+app.get('/users/profiles', checkAuth, async (req, res) => {
     try {
         const { data, error } = await supabase
             .from('users')
