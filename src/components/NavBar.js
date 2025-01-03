@@ -1,15 +1,17 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { useAuth } from '../AuthContext';
 
 
-const NavBar = ({ token, onLogout }) => {
+const NavBar = () => {
+    const { token, userId, handleLogout } = useAuth(); 
     return (
         <nav className='menu'>
         <ul className='nav-sections'>
           <li>
             <Link to="/">Home</Link>
           </li>
-          {token ? (
+          {token && userId ? (
           <>
             <li>
               <Link to="/profiles">Search</Link>
@@ -18,7 +20,7 @@ const NavBar = ({ token, onLogout }) => {
               <Link to="/profile">Profile</Link>
             </li>
             <li>
-              <button onClick={onLogout}>Log Out</button>
+              <button onClick={handleLogout}>Log Out</button>
             </li>
           </>
         ) : (

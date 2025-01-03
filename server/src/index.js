@@ -38,7 +38,7 @@ app.post("/api/login", async (req, res) => {
         });
         if (error) throw error;
         if (!data.session) throw new Error("Invalid credentials");
-        res.status(200).json({ token: data.session.access_token });
+        res.status(200).json({ token: data.session.access_token, userId: data.user });
     } catch (error) {
         res.status(401).json({ error: error.message });
     }
