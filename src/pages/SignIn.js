@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
     const { setAuthToken } = useOutletContext(); 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSignIn = async (e) => {
         e.preventDefault();
@@ -23,6 +24,7 @@ const SignIn = () => {
             localStorage.setItem("access_token", data.token);
             setAuthToken(data.token);
             setError("");
+            navigate('/');
         } catch (err) {
             setError(err.message);
         }

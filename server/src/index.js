@@ -29,29 +29,6 @@ app.get('/users', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-  
-app.get('/allusers/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-        if (error) {
-            throw error;
-        }
-
-        if (!data) {
-            return res.status(404).send('User not found');
-        }
-
-        res.json(data);
-    } catch (error) {
-        res.status(500).send('Server Error');
-    }
-    });
 app.post("/api/login", async (req, res) => {
     const { email, password } = req.body;
         try {
@@ -127,13 +104,42 @@ app.get('/users/profiles', checkAuth, async (req, res) => {
         if (error) {
             throw error;
         }
-
         res.json(data);
     } catch (error) {
         console.error('Error fetching users and profiles:', error);
         res.status(500).send('Server Error');
     }
 });
+app.get('/users/profiles/:id', checkAuth, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const { data, error } = await supabase
+        .from('users')
+        .select(`
+            id,
+            first_name,
+            last_name,
+            email,
+            user_profiles (
+                bio,
+                major,
+                year,
+                date_of_birth
+            )
+        `)
+        .eq('id', id)
+        .single();
+        if (error) {
+            throw error;
+        }
+        if (!data) {
+            return res.status(404).send('User not found');
+        }
+        res.json(data);
+    } catch (error) {
+        res.status(500).send('Server Error');
+    }
+});
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
-    });
+});

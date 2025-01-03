@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 const SignUp = () => {
     const [email, setEmail] = useState("");
@@ -6,6 +8,7 @@ const SignUp = () => {
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -20,7 +23,8 @@ const SignUp = () => {
 
             const data = await response.json();
             if (data.error) throw new Error(data.error);
-            setError("Registration successful! Please log in.");
+            setError("Registration successful! Confirm your email and sign in.");
+            navigate('/');
         } catch (err) {
             setError(err.message);
         }
