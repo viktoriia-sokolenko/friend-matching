@@ -16,19 +16,6 @@ app.use(cors({
 
 app.use(express.json());
 
-app.get('/users', async (req, res) => {
-    try {
-        const { data, error } = await supabase
-        .from('users')
-        .select();
-        if (error) {
-            throw error;
-        }
-        res.json(data);
-    } catch (error) {
-        res.status(500).send('Server Error');
-    }
-});
 app.post("/api/login", async (req, res) => {
     const { email, password } = req.body;
         try {
@@ -38,7 +25,7 @@ app.post("/api/login", async (req, res) => {
         });
         if (error) throw error;
         if (!data.session) throw new Error("Invalid credentials");
-        res.status(200).json({ token: data.session.access_token, userId: data.user });
+        res.status(200).json({ token: data.session.access_token, userId: data.user.id });
     } catch (error) {
         res.status(401).json({ error: error.message });
     }
@@ -50,8 +37,8 @@ app.post("/api/register", async (req, res) => {
         email,
         password,
         });
-        if (!data.user) throw new Error("Registration failed");
         if (error) throw error;
+        if (!data.user) throw new Error("Registration failed");
         const { error: insertError } = await supabase
             .from('users')
             .insert([
@@ -84,6 +71,19 @@ const checkAuth = async (req, res, next) => {
         res.status(401).json({ error: "Invalid token" });
     }
     };
+app.get('/users', checkAuth, async (req, res) => {
+    try {
+        const { data, error } = await supabase
+        .from('users')
+        .select();
+        if (error) {
+            throw error;
+        }
+        res.json(data);
+    } catch (error) {
+        res.status(500).send('Server Error');
+    }
+});
 app.get('/users/profiles', checkAuth, async (req, res) => {
     try {
         const { data, error } = await supabase
@@ -140,6 +140,83 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
+app.post('/users/profiles', checkAuth, async (req, res) => {
+    const { user_id, bio, major, year, dateOfBirth } = req.body;
+    try {
+        const { data, error } = await supabase
+            .from('user_profiles')
+            .insert([
+                {
+                    user_id,
+                    bio,
+                    major,
+                    year,
+                    date_of_birth: dateOfBirth
+                }
+            ])
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+        res.status(201).json({
+            message: "Profile created successfully",
+            data
+        });
+    } catch (error) {
+        console.error('Error creating profile:', error);
+        res.status(500).send('Server Error');
+    }
+});
+app.patch('/users/:id', checkAuth, async (req, res) => {
+    const { id } = req.params;
+    const { firstName, lastName } = req.body;
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .update({
+                first_name: firstName,
+                last_name: lastName
+            })
+            .eq('id', id)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+        res.json({ message: "Profile updated successfully", data });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).send('Server Error');
+    }
+});
+app.patch('/profiles/:id', checkAuth, async (req, res) => {
+    const { id } = req.params;
+    const { bio, major, year, dateOfBirth } = req.body;
+    try {
+        const { data, error } = await supabase
+            .from('user_profiles')
+            .update({
+                bio,
+                major,
+                year,
+                date_of_birth: dateOfBirth
+            })
+            .eq('user_id', id)
+            .single();
+
+        if (error) {
+            throw error;
+        }
+        res.json({ message: "Profile updated successfully", data });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).send('Server Error');
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

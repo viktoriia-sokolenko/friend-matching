@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import PlaceholderImage from '../assets/placeholder.jpg'
+import ProfileForm from '../components/ProfileForm';
+import AccountForm from '../components/AccountForm';
 
 
 const ViewProfile = () => {
