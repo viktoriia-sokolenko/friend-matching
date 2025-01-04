@@ -14,10 +14,13 @@ const NavBar = () => {
           {token && userId ? (
           <>
             <li>
-              <Link to="/profiles">Search</Link>
+              <Link to="/profiles">Search Profiles</Link>
             </li>
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/saved-profiles">My Saved Profiles</Link>
+            </li>
+            <li>
+              <Link to="/profile">My Profile</Link>
             </li>
             <li>
               <button onClick={handleLogout}>Log Out</button>

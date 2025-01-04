@@ -218,7 +218,70 @@ app.patch('/profiles/:id', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-
+app.post('/users/saved_profiles', checkAuth, async (req, res) => {
+    const { saved_id, user_id } = req.body;
+    try {
+        const { data, error } = await supabase
+          .from('saved_profiles')
+          .insert([
+            {
+              user_id,
+              saved_id
+            }
+          ]);
+  
+        if (error) {
+          throw error;
+        }
+        res.status(201).json({ message: 'Profile saved successfully', data });
+    } catch (error) {
+        res.status(500).send('Server Error');
+    }
+  });
+  app.get('/users/saved_profiles/:user_id', checkAuth, async (req, res) => {
+    const { user_id } = req.params;
+    try {
+        const { data, error } = await supabase
+          .from('saved_profiles')
+          .select(`
+            saved_id,
+            users: saved_id (
+                first_name,
+                last_name,
+                email,
+                user_profiles (
+                bio,
+                major,
+                year,
+                date_of_birth,
+                contact_info
+                )
+            )
+          `)
+        if (error) {
+            console.error('Supabase error:', error); 
+            throw error;
+        }
+        res.json(data);
+    } catch (error) {
+        console.error('Error getting saved profiles:', error);
+        res.status(500).send('Server Error');
+    }
+  });
+app.delete('/users/saved_profiles/', checkAuth, async (req, res) => {
+    const { saved_id, user_id } = req.body;
+    try {
+        const { data, error } = await supabase
+        .from('saved_profiles')
+        .delete()
+        .eq('saved_id', saved_id)
+        .eq('user_id', user_id)
+        if (error) throw error;
+        res.json({ message: 'Profile deleted successfully', data });
+    } catch (error) {
+        res.status(500).send('Server Error');
+    }
+});
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

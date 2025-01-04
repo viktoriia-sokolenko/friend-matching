@@ -115,6 +115,9 @@ button:hover{
     width: 20%;
     margin: 5px;
   }
+  button {
+    margin-right: 10px;
+  }
 }
 .ProfileText {
   display: flex;
