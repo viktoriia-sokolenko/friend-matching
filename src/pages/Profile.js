@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../AuthContext';
-import PlaceholderImage from '../assets/placeholder.jpg'
+import PlaceholderImage from '../assets/logo.png'
 import ProfileForm from '../components/ProfileForm';
 import AccountForm from '../components/AccountForm';
 

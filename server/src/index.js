@@ -258,6 +258,7 @@ app.post('/users/saved_profiles', checkAuth, async (req, res) => {
                 )
             )
           `)
+          .eq('user_id', user_id)
         if (error) {
             console.error('Supabase error:', error); 
             throw error;
