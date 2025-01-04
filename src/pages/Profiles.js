@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
 import ProfileCard from '../components/ProfileCard';
+import { useAuth } from '../AuthContext';
 
 
 const Profiles = () => {
     const [allProfiles, setAllProfiles] = useState([]);
+    const { savedProfiles } = useAuth();
     const [filteredProfiles, setFilteredProfiles] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [selectedYears, setSelectedYears] = useState([]);
     const [allYears, setAllYears] = useState([]);
+    const [includeSavedProfiles, setIncludeSavedProfiles] = useState(false);
     const handleYearChange = (e) => {
         const year = e.target.value;
         setSelectedYears((prevYears) => {
@@ -17,6 +20,9 @@ const Profiles = () => {
                 return [...prevYears, year];
             }
         });
+    };
+    const handleSavedProfilesChange = (e) => {
+        setIncludeSavedProfiles(e.target.checked);
     };
     useEffect(() => {
         const getAllProfiles = async () => {
@@ -47,20 +53,24 @@ const Profiles = () => {
             if (allProfiles) {
                 const filteredData = allProfiles.filter((profile) => {
                   const matchesYear= (selectedYears.length === 0 || selectedYears.includes(profile.user_profiles.year.toString()));
-                  if (!matchesYear) return false;
-                  if (searchInput === "") return true;
-                  const lowerSearchInput = searchInput.toLowerCase();
-                  const bioMatches = (profile.user_profiles.bio?.toLowerCase().includes(lowerSearchInput));
-                  const majorMatches = (profile.user_profiles.major?.toLowerCase().includes(lowerSearchInput));
-                  const firstNameMatches = (profile.first_name.toLowerCase().includes(lowerSearchInput));
-                  const lastNameMatches = (profile.last_name.toLowerCase().includes(lowerSearchInput));
-                  return (bioMatches || majorMatches || firstNameMatches || lastNameMatches);
+                    if (!matchesYear) return false;
+                    const isSaved = savedProfiles.some((savedProfile) => profile.id === savedProfile.saved_id);
+                    if (!includeSavedProfiles && isSaved) {
+                        return false;
+                    }
+                    if (searchInput === "") return true;
+                    const lowerSearchInput = searchInput.toLowerCase();
+                    const bioMatches = (profile.user_profiles.bio?.toLowerCase().includes(lowerSearchInput));
+                    const majorMatches = (profile.user_profiles.major?.toLowerCase().includes(lowerSearchInput));
+                    const firstNameMatches = (profile.first_name.toLowerCase().includes(lowerSearchInput));
+                    const lastNameMatches = (profile.last_name.toLowerCase().includes(lowerSearchInput));
+                    return (bioMatches || majorMatches || firstNameMatches || lastNameMatches);
                 });
                 setFilteredProfiles(filteredData);
               }
         };
         filterProfiles();
-      }, [searchInput, allProfiles, selectedYears]);
+      }, [searchInput, allProfiles, selectedYears, includeSavedProfiles, savedProfiles]);
     return (
         <div className='Page'>
             <div className = "Form">
@@ -84,6 +94,14 @@ const Profiles = () => {
                         </label>
                     ))}
                 </div>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={includeSavedProfiles}
+                        onChange={handleSavedProfilesChange}
+                    />
+                    Include saved profiles
+                </label>
             </div> 
             <div className="Grid">
                 {filteredProfiles.map((student) => (
