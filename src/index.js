@@ -1,13 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Layout from "./pages/Layout";
+import Profile from "./pages/Profile";
+import Profiles from "./pages/Profiles";
+import NoPage from "./pages/NoPage";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import ViewProfile from "./pages/ViewProfile";
+import SavedProfiles from './pages/SavedProfiles';
+import { AuthProvider } from './AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<App />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="profiles" element={<Profiles />} />
+          <Route path="saved-profiles" element={<SavedProfiles />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="profiles/:id" element={<ViewProfile />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>
 );
 

@@ -1,7 +1,10 @@
 .App {
   text-align: center;
+  padding: 20px;
+  img {
+    width: 50%;
+  }
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -12,7 +15,24 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+h1 {
+  color: #1F271B;
+}
+h2 {
+  color: #540D6E;
+}
+button {
+  background-color: #BAA5FF;
+  border: none;
+  cursor: pointer;
+  color: #1F271B;
+  padding: 10px;
+  font-weight: bold;
+  color: #F3FCF0;
+}
+button:hover{
+  background-color: #540D6E;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,11 +43,156 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
-
+.Page {
+  padding: 20px;
+}
+.ColumnPage {
+  display: flex;     
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;   
+}
+.menu {
+  width: 100%;
+  background-color: #540D6E;
+  color: white;
+  display: flex;     
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;   
+}
+.nav-sections {
+  height: 100%;
+  width:100%;
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: center;
+  box-sizing: border-box;
+  font-weight: bold;
+  li {
+    list-style-type: none;
+    text-align: center;
+    margin-right: 25px;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
+.icons {
+  width: 20%;
+}
+.Profile {
+  padding: 40px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-start;
+}
+.ProfileCard {
+  width: 100%;
+  height: 30%;
+  padding: 10px;
+  box-shadow: 0 0px 10px #0E6BA8;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 20px;
+  align-content: space-around;
+  justify-content: flex-start;
+  img {
+    width: 20%;
+    margin: 5px;
+  }
+  button {
+    margin-right: 10px;
+  }
+}
+.ProfileText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  margin: 15px;
+  h1, h2 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  span {
+    font-size: 0.8em;
+    color: #540D6E;
+    margin-left: 10px;
+  }
+}
+.Grid {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between; 
+}
+.error {
+  color: red;
+}
+.Form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  input {
+    margin: 10px;
+    padding: 7px;
+    border: 1px solid #0E6BA8;
+    border-radius: 3px;
+  }
+  button{
+    margin: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}
+.ProfileForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  input, textarea {
+    margin: 10px;
+    padding: 7px;
+    border: 1px solid #0E6BA8;
+    border-radius: 3px;
+  }
+  button{
+    margin: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  label {
+    margin-left: 10px;
+  }
+}
+.formRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
