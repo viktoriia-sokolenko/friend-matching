@@ -124,7 +124,8 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
                 bio,
                 major,
                 year,
-                date_of_birth
+                date_of_birth,
+                contact_info
             )
         `)
         .eq('id', id)

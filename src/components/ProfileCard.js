@@ -5,14 +5,11 @@ import PlaceholderImage from '../assets/logo.png'
 const ProfileCard = ({id, firstName, lastName, year, bio, major, image}) => {
     const { savedProfiles, handleToggleSave } = useAuth();
     const isSaved = savedProfiles.some((profile) => profile.saved_id === id);
-    const handleSaving = () => {
-        handleToggleSave(id, isSaved);
-    };
     return (
         <div className = "ProfileCard">
             <img 
                     src={image? image : PlaceholderImage}
-                    alt={`${firstName} ${lastName}'s profile picture`}
+                    alt={`Northwestern Logo`}
             />
             <div className='ProfileText'>
                 <h1>{firstName} {lastName} <span>Class of {year}</span></h1>

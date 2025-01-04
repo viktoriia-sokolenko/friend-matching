@@ -29,13 +29,18 @@ const ViewProfile = () => {
             <img 
                     className = "icons"
                     src={PlaceholderImage}
-                    alt={`${student.first_name} ${student.last_name}'s profile picture`}
+                    alt={`Northwestern Logo`}
             />
             <div className = "ProfileText">
                 <h1>{student.first_name} {student.last_name}</h1>
                 <h2>{student.user_profiles?.major || 'N/A'}</h2>
                 <h2>Class of {student.user_profiles?.year || 'N/A'}</h2>
                 <p>{student.user_profiles?.bio || 'No bio available'}</p>
+                <p>
+                  {student.user_profiles?.contact_info
+                    ? `Contact me at ${student.user_profiles.contact_info}`
+                    : 'No contact info available'}
+                </p>
             </div>
         </div>
     )

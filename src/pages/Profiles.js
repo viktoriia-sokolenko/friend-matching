@@ -41,7 +41,7 @@ const Profiles = () => {
             const data_with_profiles = data.filter(student => student.user_profiles !== null);
             setAllProfiles(data_with_profiles);
             setFilteredProfiles(data_with_profiles);
-            setAllYears(Array.from(new Set(data_with_profiles.map((profile) => profile.user_profiles.year.toString()))));
+            setAllYears(Array.from(new Set(data_with_profiles.map((profile) => profile.user_profiles.year?.toString()))));
           } catch (error) {
             console.error("Error fetching profiles:", error);
           }

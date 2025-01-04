@@ -41,7 +41,7 @@ const Profile = () => {
             <img 
                     className = "icons"
                     src={PlaceholderImage}
-                    alt={`${student.first_name} ${student.last_name}'s profile picture`}
+                    alt={`Northwestern Logo`}
             />
             {editMode?
             (
@@ -61,7 +61,7 @@ const Profile = () => {
                 <h2>{student.user_profiles?.major || 'Unknown major'}</h2>
                 {student.user_profiles?.year && (<h2>Class of {student.user_profiles.year}</h2>)}
                 {student.user_profiles?.bio && (<p>{student.user_profiles.bio}</p>)}
-                {student.user_profiles?.contact_info && (<p>{student.user_profiles.contact_info}</p>)}
+                {student.user_profiles?.contact_info && (<p>Contact me at: {student.user_profiles.contact_info}</p>)}
                 <button onClick = {editProfile}>Edit</button>
                 </>
                 )
