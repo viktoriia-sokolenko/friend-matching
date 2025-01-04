@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from '../AuthContext';
-import PlaceholderImage from '../assets/placeholder.jpg'
+import PlaceholderImage from '../assets/logo.png'
 
 const ProfileCard = ({id, firstName, lastName, year, bio, major, image}) => {
     const { savedProfiles, handleToggleSave } = useAuth();
