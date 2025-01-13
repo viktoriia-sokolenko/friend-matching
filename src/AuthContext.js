@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
 
 const AuthContext = createContext();
 
@@ -23,7 +23,8 @@ export const AuthProvider = ({ children }) => {
     const getInterestScore = (rankings, user) => {
         const userVector = getInterestVector(user.user_profiles.rankings);
         const studentVector = getInterestVector(rankings);
-        return calculateSimilarity(userVector, studentVector);
+        const score = calculateSimilarity(userVector, studentVector);
+        return score.toFixed(2);
     }
     const memoizedGetInterestScore = useMemo(() => getInterestScore, [getInterestVector, calculateSimilarity]); 
     const handleLogout = () => {

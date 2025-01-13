@@ -42,10 +42,10 @@ const Profiles = () => {
             const data = await response.json();
             const data_with_profiles = data.filter(student => student.user_profiles !== null);
             const user = data.find((student) => student.id === userId);
-            let data_with_scores = data_with_profiles;
+            let data_with_scores = data_with_profiles.filter(student => student.id !== userId);;
             if (user.user_profiles?.interests && user.user_profiles?.rankings){
                 setUserInterests(true);
-                data_with_scores = data_with_profiles.map(student => {
+                data_with_scores = data_with_scores.map(student => {
                     const { interests, rankings } = student.user_profiles;
                     const interestScore = memoizedGetInterestScore(rankings, user);
                     return { ...student, interestScore };

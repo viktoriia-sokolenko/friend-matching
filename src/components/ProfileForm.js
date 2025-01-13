@@ -19,10 +19,15 @@ const ProfileForm = ({ user, new: isNew }) => {
     const handleInterestChange = (e) => {
         const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
         if (selectedOptions.length <= 7) {
+            const newRankings = selectedOptions.reduce((acc, interest) => {
+                acc[interest] = 1;
+                return acc;
+            }, {});
+    
             setProfile((prevData) => ({
                 ...prevData,
                 interests: selectedOptions,
-                rankings: selectedOptions.map(() => 1),
+                rankings: newRankings,
             }));
         }
     };
@@ -45,7 +50,7 @@ const ProfileForm = ({ user, new: isNew }) => {
             dateOfBirth: user.date_of_birth || "2025-01-01",
             contactInfo: user.contact_info || "",
             interests: user.interests || [],
-            rankings: user.rankings || [],
+            rankings: user.rankings || {},
         });
     }, [user]);
 
@@ -79,6 +84,7 @@ const ProfileForm = ({ user, new: isNew }) => {
         }
     };
     const editProfile = async (e) => {
+        console.log ("profile:", profile);
         e.preventDefault();
         try {
             const response = await fetch(`/profiles/${userId}`, {

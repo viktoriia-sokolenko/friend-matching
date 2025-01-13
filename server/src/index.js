@@ -97,7 +97,9 @@ app.get('/users/profiles', checkAuth, async (req, res) => {
                     bio,
                     major,
                     year,
-                    date_of_birth
+                    date_of_birth,
+                    interests,
+                    rankings
                 )
             `)
 
@@ -125,7 +127,9 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
                 major,
                 year,
                 date_of_birth,
-                contact_info
+                contact_info,
+                interests,
+                rankings
             )
         `)
         .eq('id', id)
@@ -199,9 +203,6 @@ app.patch('/users/:id', checkAuth, async (req, res) => {
 app.patch('/profiles/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     const { bio, major, year, dateOfBirth, contactInfo, interests, rankings } = req.body;
-    if (interests.length !== rankings.length) {
-        return res.status(400).json({ error: "Interests and rankings must have the same length." });
-    }
     try {
         const { data, error } = await supabase
             .from('user_profiles')
@@ -262,7 +263,9 @@ app.post('/users/saved_profiles', checkAuth, async (req, res) => {
                 major,
                 year,
                 date_of_birth,
-                contact_info
+                contact_info,
+                interests,
+                rankings
                 )
             )
           `)

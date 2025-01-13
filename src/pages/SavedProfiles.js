@@ -17,6 +17,7 @@ const SavedProfiles = () => {
             major={profile.users.user_profiles.major}
             bio={profile.users.user_profiles.bio}
             image={profile.users.profilepicture}
+            score={profile.users.user_profiles.interestScore}
           />
         ))}
       </div>
