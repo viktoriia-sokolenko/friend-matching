@@ -132,8 +132,19 @@ button:hover{
   }
   span {
     font-size: 0.8em;
-    color: #540D6E;
     margin-left: 10px;
+  }
+  ul {
+    margin: 5px;
+    padding-left: 9px;
+  }
+  li {
+    list-style-type: none;
+    margin: 3px;
+  }
+  h4 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
   }
 }
 .Grid {

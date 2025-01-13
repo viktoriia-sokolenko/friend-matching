@@ -60,8 +60,22 @@ const Profile = () => {
                 <>
                 <h2>{student.user_profiles?.major || 'Unknown major'}</h2>
                 {student.user_profiles?.year && (<h2>Class of {student.user_profiles.year}</h2>)}
+                {student.user_profiles?.rankings && 
+                (<>
+                <h4>Interests:</h4>
+                <ul>
+                {Object.entries(student.user_profiles?.rankings)
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([interest, ranking]) => (
+                  <li key={interest}>
+                    {interest}: {ranking}
+                  </li>
+                ))}
+                </ul>
+                </>)
+                }
                 {student.user_profiles?.bio && (<p>{student.user_profiles.bio}</p>)}
-                {student.user_profiles?.contact_info && (<p>Contact me at: {student.user_profiles.contact_info}</p>)}
+                {student.user_profiles?.contact_info && (<h4>Contact me at: {student.user_profiles.contact_info}</h4>)}
                 <button onClick = {editProfile}>Edit</button>
                 </>
                 )
