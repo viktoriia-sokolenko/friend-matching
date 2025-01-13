@@ -9,8 +9,8 @@ const SavedProfiles = () => {
       <div className="grid">
         {savedProfiles.map((profile) => (
           <ProfileCard
-            key={profile.saved_user_id}
-            id={profile.saved_user_id}
+            key={profile.saved_id}
+            id={profile.saved_id}
             firstName={profile.users.first_name}
             lastName={profile.users.last_name}
             year={profile.users.user_profiles.year}
