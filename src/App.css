@@ -52,8 +52,9 @@ button:hover{
 .ColumnPage {
   display: flex;     
   flex-direction: column;
-  justify-content: center;
-  align-items: center;   
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap; 
 }
 .menu {
   width: 100%;
@@ -115,9 +116,6 @@ button:hover{
     width: 20%;
     margin: 5px;
   }
-  button {
-    margin-right: 10px;
-  }
 }
 .ProfileText {
   display: flex;
@@ -153,6 +151,16 @@ button:hover{
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between; 
+}
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  button {
+    margin-right: 10px;
+  }
 }
 .error {
   color: red;
@@ -195,6 +203,15 @@ button:hover{
   }
   label {
     margin-left: 10px;
+  }
+  select {
+    margin: 10px;
+    border: 1px solid #0E6BA8;
+    border-radius: 3px;
+    padding: 3px;
+  }
+  option {
+    padding: 5px;
   }
 }
 .formRow {

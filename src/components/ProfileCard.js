@@ -15,7 +15,7 @@ const ProfileCard = ({id, firstName, lastName, year, bio, major, image, score}) 
                 <h1>{firstName} {lastName} <span>Match: {score}%</span></h1>
                 <h2>{major}, Class of {year}</h2>
                 <p>{bio}</p>
-                <div className="formRow">
+                <div className="buttonRow">
                 <Link to={`/profiles/${id}`}><button>Connect</button></Link>
                 <button onClick={() => handleToggleSave(id, isSaved)}>
                     {isSaved ? "Delete from Saved" : "Save"}

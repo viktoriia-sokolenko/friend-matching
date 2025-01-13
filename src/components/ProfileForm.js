@@ -52,7 +52,7 @@ const ProfileForm = ({ user, new: isNew }) => {
             interests: user.interests || [],
             rankings: user.rankings || {},
         });
-    }, [user]);
+    }, [user, userId]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -76,15 +76,12 @@ const ProfileForm = ({ user, new: isNew }) => {
             if (!response.ok) {
                 throw new Error("Failed to create profile");
             }
-            const newProfile = await response.json();
-            console.log(newProfile);
             navigate(`/profiles`);
         } catch (err) {
             setError(err.message);
         }
     };
     const editProfile = async (e) => {
-        console.log ("profile:", profile);
         e.preventDefault();
         try {
             const response = await fetch(`/profiles/${userId}`, {
@@ -179,7 +176,7 @@ const ProfileForm = ({ user, new: isNew }) => {
                     <div className="formRow">
                         <label>Rate your interests:</label>
                         {profile.interests.map((interest) => (
-                            <div key={interest}>
+                            <div className="formRow" key={interest}>
                                 <label>{interest}</label>
                                 <select
                                     name={interest}

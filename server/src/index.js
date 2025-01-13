@@ -145,7 +145,23 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+app.delete('/users/profiles/:id', checkAuth, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const { error } = await supabase
+            .from('user_profiles')
+            .delete()
+            .eq('user_id', id);
 
+        if (error) {
+            throw error;
+        }
+        res.status(200).send('Profile successfully deleted');
+    } catch (error) {
+        console.error('Error deleting profile:', error);
+        res.status(500).send('Server Error');
+    }
+});
 app.post('/users/profiles', checkAuth, async (req, res) => {
     const { user_id, bio, major, year, dateOfBirth, contactInfo, interests, rankings } = req.body;
     try {

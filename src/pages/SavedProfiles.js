@@ -3,11 +3,10 @@ import { useAuth } from '../AuthContext';
 import ProfileCard from '../components/ProfileCard';
 
 const SavedProfiles = () => {
-  const { savedProfiles, userId, memoizedGetInterestScore } = useAuth();
+  const { savedProfiles, userId, memoizedGetInterestScore, token } = useAuth();
   const [profiles, setProfiles] = useState (savedProfiles);
   useEffect(() => {
     const calculateInterestScores = async () => {
-    const token = localStorage.getItem('access_token');
       try {
         const response = await fetch(`/users/profiles/${userId}`,{
             method: 'GET',
@@ -29,7 +28,7 @@ const SavedProfiles = () => {
       }
     };
     calculateInterestScores();
-  }, [savedProfiles, userId, memoizedGetInterestScore]);
+  }, [savedProfiles, userId, memoizedGetInterestScore, token]);
   return (
     <div className="Page">
       <div className="grid">

@@ -5,7 +5,7 @@ import { useAuth } from '../AuthContext';
 
 const Profiles = () => {
     const [allProfiles, setAllProfiles] = useState([]);
-    const { savedProfiles, userId, memoizedGetInterestScore } = useAuth();
+    const { savedProfiles, userId, memoizedGetInterestScore, token } = useAuth();
     const [filteredProfiles, setFilteredProfiles] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [selectedYears, setSelectedYears] = useState([]);
@@ -28,7 +28,6 @@ const Profiles = () => {
     };
     useEffect(() => {
         const getAllProfiles = async () => {
-            const token = localStorage.getItem('access_token');
             try {
             const response = await fetch('/users/profiles', {
                 method: 'GET',
@@ -59,7 +58,7 @@ const Profiles = () => {
           }
         };
         getAllProfiles();
-      }, [userId, memoizedGetInterestScore]);
+      }, [userId, memoizedGetInterestScore, token]);
       useEffect(() => {
         const filterProfiles = () => {
             if (allProfiles.length === 0) return;
