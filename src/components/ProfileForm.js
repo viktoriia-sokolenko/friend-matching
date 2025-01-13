@@ -174,7 +174,7 @@ const ProfileForm = ({ user, new: isNew }) => {
 
                 {profile.interests.length > 0 && (
                     <div className="formRow">
-                        <label>Rate your interests:</label>
+                        <label>Rate your interests based on their importance for matching:</label>
                         {profile.interests.map((interest) => (
                             <div className="formRow" key={interest}>
                                 <label>{interest}</label>
