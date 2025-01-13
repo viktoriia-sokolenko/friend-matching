@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
 
 const AuthContext = createContext();
 
@@ -6,6 +6,27 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState("");
     const [userId, setUserId] = useState(localStorage.getItem("user_id") || null);
     const [toggleTrigger, setToggleTrigger] = useState(0);
+    const listOfInterests = ["History/Politics", "Science/Technology", "Video Games", "Sports/Fitness", "Sports (watching)", "Literature", "Film/Television", "Music", "Visual Arts", "Performing Arts", "Cooking/Baking", "Crafts/DIY", "Hiking/Outdoor activities", "Travel", "Sustainability", "Activism/Advocacy", "Volunteering", "Other"];
+    const getInterestVector = (rankedInterests) =>{
+        return listOfInterests.map(interest => rankedInterests[interest] || 0);
+    }
+    const calculateSimilarity = (vec1, vec2) => {
+        const dotpdt = vec1.reduce((acc, val, i) => acc + val * vec2[i], 0);
+        const vec1sqrd = vec1.reduce((acc, val) => acc + val * val, 0);
+        const vec2sqrd = vec2.reduce((acc, val) => acc + val * val, 0);
+        if (vec2sqrd == 0 || vec1sqrd == 0){
+            return 0;
+        }
+        const cosineSimilarity = (dotpdt/(Math.sqrt(vec1sqrd)*Math.sqrt(vec2sqrd)));
+        return (Math.max(0, cosineSimilarity)*100);
+    }
+    const getInterestScore = (rankings, user) => {
+        const userVector = getInterestVector(user.user_profiles.rankings);
+        const studentVector = getInterestVector(rankings);
+        const score = calculateSimilarity(userVector, studentVector);
+        return score.toFixed(2);
+    }
+    const memoizedGetInterestScore = useMemo(() => getInterestScore, [getInterestVector, calculateSimilarity]); 
     const handleLogout = () => {
         if (userId) {
             setUserId("");
@@ -77,7 +98,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ token, setToken, userId, setUserId, handleLogout, savedProfiles, handleToggleSave }}>
+        <AuthContext.Provider value={{ token, setToken, userId, setUserId, handleLogout, savedProfiles, handleToggleSave, listOfInterests, memoizedGetInterestScore }}>
             {children}
         </AuthContext.Provider>
     );

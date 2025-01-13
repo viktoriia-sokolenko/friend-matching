@@ -97,7 +97,9 @@ app.get('/users/profiles', checkAuth, async (req, res) => {
                     bio,
                     major,
                     year,
-                    date_of_birth
+                    date_of_birth,
+                    interests,
+                    rankings
                 )
             `)
 
@@ -125,7 +127,9 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
                 major,
                 year,
                 date_of_birth,
-                contact_info
+                contact_info,
+                interests,
+                rankings
             )
         `)
         .eq('id', id)
@@ -141,9 +145,25 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+app.delete('/users/profiles/:id', checkAuth, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const { error } = await supabase
+            .from('user_profiles')
+            .delete()
+            .eq('user_id', id);
 
+        if (error) {
+            throw error;
+        }
+        res.status(200).send('Profile successfully deleted');
+    } catch (error) {
+        console.error('Error deleting profile:', error);
+        res.status(500).send('Server Error');
+    }
+});
 app.post('/users/profiles', checkAuth, async (req, res) => {
-    const { user_id, bio, major, year, dateOfBirth, contactInfo } = req.body;
+    const { user_id, bio, major, year, dateOfBirth, contactInfo, interests, rankings } = req.body;
     try {
         const { data, error } = await supabase
             .from('user_profiles')
@@ -154,7 +174,9 @@ app.post('/users/profiles', checkAuth, async (req, res) => {
                     major,
                     year,
                     date_of_birth: dateOfBirth,
-                    contact_info: contactInfo
+                    contact_info: contactInfo,
+                    interests,
+                    rankings
                 }
             ])
             .single();
@@ -196,7 +218,7 @@ app.patch('/users/:id', checkAuth, async (req, res) => {
 });
 app.patch('/profiles/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
-    const { bio, major, year, dateOfBirth, contactInfo } = req.body;
+    const { bio, major, year, dateOfBirth, contactInfo, interests, rankings } = req.body;
     try {
         const { data, error } = await supabase
             .from('user_profiles')
@@ -205,7 +227,9 @@ app.patch('/profiles/:id', checkAuth, async (req, res) => {
                 major,
                 year,
                 date_of_birth: dateOfBirth,
-                contact_info: contactInfo
+                contact_info: contactInfo,
+                interests,
+                rankings
             })
             .eq('user_id', id)
             .single();
@@ -255,7 +279,9 @@ app.post('/users/saved_profiles', checkAuth, async (req, res) => {
                 major,
                 year,
                 date_of_birth,
-                contact_info
+                contact_info,
+                interests,
+                rankings
                 )
             )
           `)

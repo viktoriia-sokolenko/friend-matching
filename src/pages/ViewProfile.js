@@ -35,12 +35,26 @@ const ViewProfile = () => {
                 <h1>{student.first_name} {student.last_name}</h1>
                 <h2>{student.user_profiles?.major || 'N/A'}</h2>
                 <h2>Class of {student.user_profiles?.year || 'N/A'}</h2>
+                {student.user_profiles?.rankings && 
+                (<>
+                <h4>Interests:</h4>
+                <ul>
+                {Object.entries(student.user_profiles?.rankings)
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([interest, ranking]) => (
+                  <li key={interest}>
+                    {interest}: {ranking}
+                  </li>
+                ))}
+                </ul>
+                </>)
+                }
                 <p>{student.user_profiles?.bio || 'No bio available'}</p>
-                <p>
+                <h4>
                   {student.user_profiles?.contact_info
                     ? `Contact me at ${student.user_profiles.contact_info}`
                     : 'No contact info available'}
-                </p>
+                </h4>
             </div>
         </div>
     )
