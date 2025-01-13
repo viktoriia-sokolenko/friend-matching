@@ -47,7 +47,7 @@ const Profiles = () => {
                 setUserInterests(true);
                 data_with_scores = data_with_profiles.map(student => {
                     const { interests, rankings } = student.user_profiles;
-                    const interestScore = memoizedGetInterestScore(interests, rankings, user);
+                    const interestScore = memoizedGetInterestScore(rankings, user);
                     return { ...student, interestScore };
                 });
             }

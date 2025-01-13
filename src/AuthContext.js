@@ -7,11 +7,7 @@ export const AuthProvider = ({ children }) => {
     const [userId, setUserId] = useState(localStorage.getItem("user_id") || null);
     const [toggleTrigger, setToggleTrigger] = useState(0);
     const listOfInterests = ["History/Politics", "Science/Technology", "Video Games", "Sports/Fitness", "Sports (watching)", "Literature", "Film/Television", "Music", "Visual Arts", "Performing Arts", "Cooking/Baking", "Crafts/DIY", "Hiking/Outdoor activities", "Travel", "Sustainability", "Activism/Advocacy", "Volunteering", "Other"];
-    const getInterestVector = (interests, rankings) =>{
-        const rankedInterests = interests.reduce((acc, interest, index) => {
-            acc[interest] = rankings[index];
-            return acc;
-        }, {});
+    const getInterestVector = (rankedInterests) =>{
         return listOfInterests.map(interest => rankedInterests[interest] || 0);
     }
     const calculateSimilarity = (vec1, vec2) => {
@@ -24,9 +20,9 @@ export const AuthProvider = ({ children }) => {
         const cosineSimilarity = (dotpdt/(Math.sqrt(vec1sqrd)*Math.sqrt(vec2sqrd)));
         return (Math.max(0, cosineSimilarity)*100);
     }
-    const getInterestScore = (interests, rankings, user) => {
-        const userVector = getInterestVector(user.user_profiles.interests, user.user_profiles.rankings);
-        const studentVector = getInterestVector(interests, rankings);
+    const getInterestScore = (rankings, user) => {
+        const userVector = getInterestVector(user.user_profiles.rankings);
+        const studentVector = getInterestVector(rankings);
         return calculateSimilarity(userVector, studentVector);
     }
     const memoizedGetInterestScore = useMemo(() => getInterestScore, [getInterestVector, calculateSimilarity]); 

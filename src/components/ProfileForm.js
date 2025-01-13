@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
 const ProfileForm = ({ user, new: isNew }) => {
-    const { userId, token } = useAuth();
+    const { userId, token, listOfInterests } = useAuth();
     const [profile, setProfile] = useState({
         user_id: userId,
         bio: user.bio || "",
@@ -12,11 +12,30 @@ const ProfileForm = ({ user, new: isNew }) => {
         dateOfBirth: user.date_of_birth || "2025-01-01",
         contactInfo: user.contact_info || "",
         interests: user.interests || [],
-        weights: user.weights || [],
+        rankings: user.rankings || {},
     });
     const [error, setError] = useState("");
     const navigate = useNavigate();
-
+    const handleInterestChange = (e) => {
+        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+        if (selectedOptions.length <= 7) {
+            setProfile((prevData) => ({
+                ...prevData,
+                interests: selectedOptions,
+                rankings: selectedOptions.map(() => 1),
+            }));
+        }
+    };
+    const handleRatingChange = (e) => {
+        const { name, value } = e.target;
+        setProfile((prevData) => ({
+            ...prevData,
+            rankings: {
+                ...prevData.rankings,
+                [name]: value,
+            },
+        }));
+    };
     useEffect(() => {
         setProfile({
             user_id: userId,
@@ -25,6 +44,8 @@ const ProfileForm = ({ user, new: isNew }) => {
             year: user.year || null,
             dateOfBirth: user.date_of_birth || "2025-01-01",
             contactInfo: user.contact_info || "",
+            interests: user.interests || [],
+            rankings: user.rankings || [],
         });
     }, [user]);
 
@@ -131,6 +152,44 @@ const ProfileForm = ({ user, new: isNew }) => {
                         onChange={handleInputChange}
                     />
                 </div>
+                <div className="formRow">
+                    <label>Interests (Choose up to 7):</label>
+                    <select
+                        multiple
+                        value={profile.interests}
+                        onChange={handleInterestChange}
+                        size="5"
+                        disabled={profile.interests.length >= 7}
+                    >
+                        {listOfInterests.map((interest) => (
+                            <option key={interest} value={interest}>
+                                {interest}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {profile.interests.length > 0 && (
+                    <div className="formRow">
+                        <label>Rate your interests:</label>
+                        {profile.interests.map((interest) => (
+                            <div key={interest}>
+                                <label>{interest}</label>
+                                <select
+                                    name={interest}
+                                    value={profile.rankings[interest] || 1}
+                                    onChange={handleRatingChange}
+                                >
+                                    {[1, 2, 3, 4, 5].map((rating) => (
+                                        <option key={rating} value={rating}>
+                                            {rating}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        ))}
+                    </div>
+                )}
                 <button type="submit" onClick={isNew? createProfile : editProfile}>{isNew ? "Create Profile" : "Save Changes"}</button>
             </form>
 

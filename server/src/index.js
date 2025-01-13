@@ -143,7 +143,7 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
 });
 
 app.post('/users/profiles', checkAuth, async (req, res) => {
-    const { user_id, bio, major, year, dateOfBirth, contactInfo } = req.body;
+    const { user_id, bio, major, year, dateOfBirth, contactInfo, interests, rankings } = req.body;
     try {
         const { data, error } = await supabase
             .from('user_profiles')
@@ -154,7 +154,9 @@ app.post('/users/profiles', checkAuth, async (req, res) => {
                     major,
                     year,
                     date_of_birth: dateOfBirth,
-                    contact_info: contactInfo
+                    contact_info: contactInfo,
+                    interests,
+                    rankings
                 }
             ])
             .single();
@@ -196,7 +198,10 @@ app.patch('/users/:id', checkAuth, async (req, res) => {
 });
 app.patch('/profiles/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
-    const { bio, major, year, dateOfBirth, contactInfo } = req.body;
+    const { bio, major, year, dateOfBirth, contactInfo, interests, rankings } = req.body;
+    if (interests.length !== rankings.length) {
+        return res.status(400).json({ error: "Interests and rankings must have the same length." });
+    }
     try {
         const { data, error } = await supabase
             .from('user_profiles')
@@ -205,7 +210,9 @@ app.patch('/profiles/:id', checkAuth, async (req, res) => {
                 major,
                 year,
                 date_of_birth: dateOfBirth,
-                contact_info: contactInfo
+                contact_info: contactInfo,
+                interests,
+                rankings
             })
             .eq('user_id', id)
             .single();

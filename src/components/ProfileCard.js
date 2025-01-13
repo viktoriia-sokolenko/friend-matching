@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from '../AuthContext';
 import PlaceholderImage from '../assets/logo.png'
 
-const ProfileCard = ({id, firstName, lastName, year, bio, major, image}) => {
+const ProfileCard = ({id, firstName, lastName, year, bio, major, image, interestScore}) => {
     const { savedProfiles, handleToggleSave } = useAuth();
     const isSaved = savedProfiles.some((profile) => profile.saved_id === id);
     return (
@@ -12,8 +12,8 @@ const ProfileCard = ({id, firstName, lastName, year, bio, major, image}) => {
                     alt={`Northwestern Logo`}
             />
             <div className='ProfileText'>
-                <h1>{firstName} {lastName} <span>Class of {year}</span></h1>
-                <h2>{major}</h2>
+                <h1>{firstName} {lastName} <span>Match: {interestScore}%</span></h1>
+                <h2>{major} Class of {year}</h2>
                 <p>{bio}</p>
                 <div className="formRow">
                 <Link to={`/profiles/${id}`}><button>Connect</button></Link>
