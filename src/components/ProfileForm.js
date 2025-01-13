@@ -11,6 +11,8 @@ const ProfileForm = ({ user, new: isNew }) => {
         year: user.year || null,
         dateOfBirth: user.date_of_birth || "2025-01-01",
         contactInfo: user.contact_info || "",
+        interests: user.interests || [],
+        weights: user.weights || [],
     });
     const [error, setError] = useState("");
     const navigate = useNavigate();
