@@ -71,7 +71,7 @@ const checkAuth = async (req, res, next) => {
         res.status(401).json({ error: "Invalid token" });
     }
     };
-app.get('/users', checkAuth, async (req, res) => {
+app.get('/api/users', checkAuth, async (req, res) => {
     try {
         const { data, error } = await supabase
         .from('users')
@@ -84,7 +84,7 @@ app.get('/users', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-app.get('/users/profiles', checkAuth, async (req, res) => {
+app.get('/api/users/profiles', checkAuth, async (req, res) => {
     try {
         const { data, error } = await supabase
             .from('users')
@@ -112,7 +112,7 @@ app.get('/users/profiles', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-app.get('/users/profiles/:id', checkAuth, async (req, res) => {
+app.get('/api/users/profiles/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     try {
         const { data, error } = await supabase
@@ -145,7 +145,7 @@ app.get('/users/profiles/:id', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-app.delete('/users/profiles/:id', checkAuth, async (req, res) => {
+app.delete('/api/users/profiles/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     try {
         const { error } = await supabase
@@ -162,7 +162,7 @@ app.delete('/users/profiles/:id', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-app.post('/users/profiles', checkAuth, async (req, res) => {
+app.post('/api/users/profiles', checkAuth, async (req, res) => {
     const { user_id, bio, major, year, dateOfBirth, contactInfo, interests, rankings } = req.body;
     try {
         const { data, error } = await supabase
@@ -194,7 +194,7 @@ app.post('/users/profiles', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-app.patch('/users/:id', checkAuth, async (req, res) => {
+app.patch('/api/users/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     const { firstName, lastName } = req.body;
     try {
@@ -216,7 +216,7 @@ app.patch('/users/:id', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-app.patch('/profiles/:id', checkAuth, async (req, res) => {
+app.patch('/api/profiles/:id', checkAuth, async (req, res) => {
     const { id } = req.params;
     const { bio, major, year, dateOfBirth, contactInfo, interests, rankings } = req.body;
     try {
@@ -243,7 +243,7 @@ app.patch('/profiles/:id', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-app.post('/users/saved_profiles', checkAuth, async (req, res) => {
+app.post('/api/users/saved_profiles', checkAuth, async (req, res) => {
     const { saved_id, user_id } = req.body;
     try {
         const { data, error } = await supabase
@@ -263,7 +263,7 @@ app.post('/users/saved_profiles', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
   });
-  app.get('/users/saved_profiles/:user_id', checkAuth, async (req, res) => {
+  app.get('/api/users/saved_profiles/:user_id', checkAuth, async (req, res) => {
     const { user_id } = req.params;
     try {
         const { data, error } = await supabase
@@ -296,7 +296,7 @@ app.post('/users/saved_profiles', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
   });
-app.delete('/users/saved_profiles/', checkAuth, async (req, res) => {
+app.delete('/api/users/saved_profiles/', checkAuth, async (req, res) => {
     const { saved_id, user_id } = req.body;
     try {
         const { data, error } = await supabase
