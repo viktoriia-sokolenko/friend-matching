@@ -14,7 +14,6 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "pg": "^8.13.1",
-    "@vercel/node": "^2.0.0",
-    "@supabase/supabase-js": "^2.47.10"
+    "@vercel/node": "^2.0.0"
   }
 }
