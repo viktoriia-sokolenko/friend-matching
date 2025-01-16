@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.b47169ce.css",
-    "main.js": "/static/js/main.a14e64fa.js",
+    "main.js": "/static/js/main.35d3c7e2.js",
     "static/js/488.9c92ff38.chunk.js": "/static/js/488.9c92ff38.chunk.js",
     "static/media/logo.png": "/static/media/logo.d48b4cfc65cf84459daa.png",
     "static/media/northwestern.jpg": "/static/media/northwestern.715a1c0faec3061ac6cc.jpg",
     "index.html": "/index.html",
     "main.b47169ce.css.map": "/static/css/main.b47169ce.css.map",
-    "main.a14e64fa.js.map": "/static/js/main.a14e64fa.js.map",
+    "main.35d3c7e2.js.map": "/static/js/main.35d3c7e2.js.map",
     "488.9c92ff38.chunk.js.map": "/static/js/488.9c92ff38.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b47169ce.css",
-    "static/js/main.a14e64fa.js"
+    "static/js/main.35d3c7e2.js"
   ]
 }
