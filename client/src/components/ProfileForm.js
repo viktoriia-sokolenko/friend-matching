@@ -64,7 +64,7 @@ const ProfileForm = ({ user, new: isNew }) => {
     const createProfile = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`/api/users/profiles`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/profiles`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const ProfileForm = ({ user, new: isNew }) => {
     const editProfile = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`/api/profiles/${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/profiles/${userId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

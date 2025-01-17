@@ -8,7 +8,7 @@ const SavedProfiles = () => {
   useEffect(() => {
     const calculateInterestScores = async () => {
       try {
-        const response = await fetch(`/api/users/profiles/${userId}`,{
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/profiles/${userId}`,{
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,

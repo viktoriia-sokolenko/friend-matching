@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
         const fetchSavedProfiles = async () => {
             if (!userId || !token) return;
             try {
-              const response = await fetch(`/api/users/saved_profiles/${userId}`, {
+              const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/saved_profiles/${userId}`, {
                 method: 'GET',
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     }, [userId, token, toggleTrigger]);
     const handleToggleSave = async (profileId, isSaved) => {
         const method = isSaved ? 'DELETE' : 'POST';
-        const endpoint = `/api/users/saved_profiles/`;
+        const endpoint = `${process.env.REACT_APP_API_BASE_URL}/api/users/saved_profiles/`;
         const body = JSON.stringify({ saved_id: profileId, user_id: userId });
 
         try {

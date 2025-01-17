@@ -28,7 +28,7 @@ const AccountForm = ({ user}) => {
     const editAccount = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`/api/users/${user.id}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/${user.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

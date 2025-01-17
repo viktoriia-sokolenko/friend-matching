@@ -29,7 +29,7 @@ const Profiles = () => {
     useEffect(() => {
         const getAllProfiles = async () => {
             try {
-            const response = await fetch('/api/users/profiles', {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/profiles`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,

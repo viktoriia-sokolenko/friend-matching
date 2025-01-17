@@ -19,7 +19,7 @@ const Profile = () => {
     const deleteProfile = async () => {
         if (window.confirm("Are you sure you want to delete your profile? This action cannot be undone.")) {
             try {
-                const response = await fetch(`/api/users/profiles/${userId}`, {
+                const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/profiles/${userId}`, {
                     method: 'DELETE',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ const Profile = () => {
     useEffect(() => {
         const getProfile = async () => {
           try {
-            const response = await fetch(`/api/users/profiles/${userId}`,{
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/profiles/${userId}`,{
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,

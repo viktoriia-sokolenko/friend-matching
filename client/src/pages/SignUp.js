@@ -13,7 +13,7 @@ const SignUp = () => {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("/api/register", {
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

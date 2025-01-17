@@ -10,7 +10,7 @@ const ViewProfile = () => {
         const getProfile = async () => {
         const token = localStorage.getItem('access_token');
           try {
-            const response = await fetch(`/api/users/profiles/${id}`,{
+            const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/profiles/${id}`,{
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,
