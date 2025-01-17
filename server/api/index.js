@@ -20,15 +20,9 @@ app.use(cors({
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-app.options('*', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://friend-matching-lyart.vercel.app');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.sendStatus(200);
-  });
-  
 app.use(express.json());
 
 app.post("/api/login", async (req, res) => {
