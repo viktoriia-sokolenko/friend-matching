@@ -310,6 +310,4 @@ app.delete('/api/users/saved_profiles/', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+module.exports = app;
