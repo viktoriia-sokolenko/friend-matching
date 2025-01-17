@@ -2,12 +2,13 @@ const express = require('express');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
+const cors = require('cors');
+
 const app = express();
 const port = process.env.PORT || 3001;
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-const cors = require('cors');
 const allowedOrigins = ['http://localhost:3000', 'https://friend-matching-lyart.vercel.app'];
 app.use(cors({
     origin: (origin, callback) => {
@@ -21,6 +22,13 @@ app.use(cors({
     credentials: true,
 }));
 
+app.options('*', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'https://friend-matching-lyart.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.sendStatus(200);
+  });
+  
 app.use(express.json());
 
 app.post("/api/login", async (req, res) => {
