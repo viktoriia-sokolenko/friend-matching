@@ -5,7 +5,7 @@ import { useAuth } from '../AuthContext';
 
 const Profiles = () => {
     const [allProfiles, setAllProfiles] = useState([]);
-    const { savedProfiles, userId, memoizedGetInterestScore, token } = useAuth();
+    const { savedProfiles, userId, getInterestScore, token } = useAuth();
     const [filteredProfiles, setFilteredProfiles] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [selectedYears, setSelectedYears] = useState([]);
@@ -46,7 +46,7 @@ const Profiles = () => {
                 setUserInterests(true);
                 data_with_scores = data_with_scores.map(student => {
                     const { rankings } = student.user_profiles;
-                    const interestScore = memoizedGetInterestScore(rankings, user);
+                    const interestScore = getInterestScore(rankings, user);
                     return { ...student, interestScore };
                 });
             }
@@ -58,7 +58,7 @@ const Profiles = () => {
           }
         };
         getAllProfiles();
-      }, [userId, memoizedGetInterestScore, token]);
+      }, [userId, getInterestScore, token]);
       useEffect(() => {
         const filterProfiles = () => {
             if (allProfiles.length === 0) return;

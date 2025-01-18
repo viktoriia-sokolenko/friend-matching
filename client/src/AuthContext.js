@@ -1,12 +1,25 @@
 import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
 
-const AuthContext = createContext();
-
+const AuthContext = createContext({
+    token: "",
+    setToken: () => {},
+    userId: null,
+    setUserId: () => {},
+    handleLogout: () => {},
+    savedProfiles: [],
+    handleToggleSave: () => {},
+    listOfInterests: [],
+    getInterestScore: () => 0,
+});
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState("");
     const [userId, setUserId] = useState(localStorage.getItem("user_id") || null);
-    const [toggleTrigger, setToggleTrigger] = useState(0);
-    const listOfInterests = ["History/Politics", "Science/Technology", "Video Games", "Sports/Fitness", "Sports (watching)", "Literature", "Film/Television", "Music", "Visual Arts", "Performing Arts", "Cooking/Baking", "Crafts/DIY", "Hiking/Outdoor activities", "Travel", "Sustainability", "Activism/Advocacy", "Volunteering", "Other"];
+    const listOfInterests = useMemo(() => [
+        "History/Politics", "Science/Technology", "Video Games", "Sports/Fitness",
+        "Sports (watching)", "Literature", "Film/Television", "Music", "Visual Arts",
+        "Performing Arts", "Cooking/Baking", "Crafts/DIY", "Hiking/Outdoor activities",
+        "Travel", "Sustainability", "Activism/Advocacy", "Volunteering", "Other"
+    ], []);
     const getInterestVector = (rankedInterests) =>{
         return listOfInterests.map(interest => rankedInterests[interest] || 0);
     }
@@ -26,7 +39,6 @@ export const AuthProvider = ({ children }) => {
         const score = calculateSimilarity(userVector, studentVector);
         return score.toFixed(2);
     }
-    const memoizedGetInterestScore = useMemo(() => getInterestScore, [getInterestVector, calculateSimilarity, getInterestScore]); 
     const handleLogout = () => {
         if (userId) {
             setUserId("");
@@ -38,27 +50,27 @@ export const AuthProvider = ({ children }) => {
         }
     };
     const [savedProfiles, setSavedProfiles] = useState([]);
+    const fetchSavedProfiles = async () => {
+        if (!userId || !token) return;
+        try {
+          const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/saved_profiles/${userId}`, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`Error fetching saved profiles: ${response.status}`);
+          }
+          const data = await response.json();
+          setSavedProfiles(data);
+        } catch (error) {
+          console.error('Error fetching saved profiles:', error);
+        }
+      };
     useEffect(() => {
-        const fetchSavedProfiles = async () => {
-            if (!userId || !token) return;
-            try {
-              const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/users/saved_profiles/${userId}`, {
-                method: 'GET',
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-              if (!response.ok) {
-                throw new Error(`Error fetching saved profiles: ${response.status}`);
-              }
-              const data = await response.json();
-              setSavedProfiles(data);
-            } catch (error) {
-              console.error('Error fetching saved profiles:', error);
-            }
-          };
         fetchSavedProfiles();
-    }, [userId, token, toggleTrigger]);
+    }, [userId, token]);
     const handleToggleSave = async (profileId, isSaved) => {
         const method = isSaved ? 'DELETE' : 'POST';
         const endpoint = `${process.env.REACT_APP_API_BASE_URL}/api/users/saved_profiles/`;
@@ -74,7 +86,7 @@ export const AuthProvider = ({ children }) => {
                 body,
             });
             if (response.ok) {
-                setToggleTrigger((prev) => prev + 1);
+                fetchSavedProfiles();
             } else {
                 throw new Error(`Failed to toggle profile save: ${response.status}`);
             }
@@ -98,7 +110,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ token, setToken, userId, setUserId, handleLogout, savedProfiles, handleToggleSave, listOfInterests, memoizedGetInterestScore }}>
+        <AuthContext.Provider value={{ token, setToken, userId, setUserId, handleLogout, savedProfiles, handleToggleSave, listOfInterests, getInterestScore }}>
             {children}
         </AuthContext.Provider>
     );

@@ -3,7 +3,7 @@ import { useAuth } from '../AuthContext';
 import ProfileCard from '../components/ProfileCard';
 
 const SavedProfiles = () => {
-  const { savedProfiles, userId, memoizedGetInterestScore, token } = useAuth();
+  const { savedProfiles, userId, getInterestScore, token } = useAuth();
   const [profiles, setProfiles] = useState (savedProfiles);
   useEffect(() => {
     const calculateInterestScores = async () => {
@@ -18,7 +18,7 @@ const SavedProfiles = () => {
         if (data.user_profiles?.interests && data.user_profiles?.rankings){
           const data_with_scores = savedProfiles.map(student => {
               const { rankings } = student.users.user_profiles;
-              const interestScore = memoizedGetInterestScore(rankings, data);
+              const interestScore = getInterestScore(rankings, data);
               return { ...student, interestScore };
           });
           setProfiles(data_with_scores);
@@ -28,7 +28,7 @@ const SavedProfiles = () => {
       }
     };
     calculateInterestScores();
-  }, [savedProfiles, userId, memoizedGetInterestScore, token]);
+  }, [savedProfiles, userId, getInterestScore, token]);
   return (
     <div className="Page">
       <div className="grid">
