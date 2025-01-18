@@ -9,7 +9,7 @@ const port = process.env.PORT || 3001;
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-const allowedOrigins = ['http://localhost:3000', 'https://friend-matching-lyart.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://friend-matching-lyart.vercel.app','https://friend-matching-viktoriia-sokolenkos-projects.vercel.app'];
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
