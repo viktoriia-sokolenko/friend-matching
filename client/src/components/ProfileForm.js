@@ -162,7 +162,6 @@ const ProfileForm = ({ user, new: isNew }) => {
                         value={profile.interests}
                         onChange={handleInterestChange}
                         size="5"
-                        disabled={profile.interests.length >= 7}
                     >
                         {listOfInterests.map((interest) => (
                             <option key={interest} value={interest}>
