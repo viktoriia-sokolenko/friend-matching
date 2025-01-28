@@ -101,7 +101,7 @@ button:hover{
 }
 .ProfileCard {
   width: 100%;
-  height: 30%;
+  height: 10%;
   padding: 10px;
   box-shadow: 0 0px 10px #0E6BA8;
   display: flex;
@@ -113,7 +113,7 @@ button:hover{
   align-content: space-around;
   justify-content: flex-start;
   img {
-    width: 20%;
+    width: 10%;
     margin: 5px;
   }
 }
@@ -123,10 +123,10 @@ button:hover{
   justify-content: center;
   align-items: flex-start;
   flex-wrap: nowrap;
-  margin: 15px;
+  margin: 5px;
   h1, h2 {
     margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.3em;
   }
   span {
     font-size: 0.8em;
